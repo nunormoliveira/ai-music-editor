@@ -9,7 +9,9 @@ import crypto from "crypto";
 import { fileURLToPath } from "url";
 import 'dotenv/config'; // se estiveres a usar módulos ES (type: "module" no package.json)
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
-console.log("SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE?.slice(0, 10) + '...');
+const envServiceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+console.log("SERVICE_ROLE_KEY:", envServiceRoleKey ? envServiceRoleKey.slice(0, 10) + "..." : undefined);
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -68,7 +70,8 @@ const PLAN_LIMITS = {
 };
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_SERVICE_ROLE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const FILE_SIGNING_SECRET =
   process.env.FILE_SIGNING_SECRET || process.env.SUPABASE_FILE_SIGNING_SECRET || SUPABASE_SERVICE_ROLE_KEY || "local-secret";
