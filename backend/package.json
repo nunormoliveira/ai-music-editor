@@ -1,6 +1,6 @@
 {
-  "name": "ai-music-editor-server",
-  "version": "0.0.1",
+  "name": "ai-music-editor-backend",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {

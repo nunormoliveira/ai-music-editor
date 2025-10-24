@@ -1,16 +1,50 @@
-# React + Vite
+# AI Music Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository hosts a small full-stack playground for experimenting with audio uploads and editing tools. The code base is now split into dedicated frontend and backend folders so it is immediately clear which runtime each part belongs to.
 
-Currently, two official plugins are available:
+## Project structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+.
+├── backend/              # Express API for audio uploads
+│   ├── index.js          # Entry point for the file upload server
+│   └── package.json      # Backend dependencies and scripts
+├── frontend/             # React + Vite single page application
+│   ├── src/              # Application source code
+│   ├── public/           # Static assets served by Vite
+│   ├── package.json      # Frontend dependencies and scripts
+│   └── vite.config.js    # Vite configuration
+└── .gitignore
+```
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Both applications are managed independently so you can work on either side without pulling in the other one's dependencies.
 
-## Expanding the ESLint configuration
+### Frontend (React + Vite)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The development server listens on port `5173` by default.
+
+### Backend (Express API)
+
+```bash
+cd backend
+npm install
+npm start
+```
+
+The upload API listens on port `5000` by default and exposes two endpoints:
+
+- `GET /api/health` – quick health check endpoint.
+- `POST /api/upload` – accepts an `audio` file field up to 50 MB and returns the public URL.
+
+## Notes
+
+- `frontend/node_modules` is intentionally not committed. Run `npm install` inside each workspace to generate the local dependencies.
+- Adjust the `PORT` environment variable before starting the backend if you need a different port.
