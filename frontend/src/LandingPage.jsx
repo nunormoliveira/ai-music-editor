@@ -42,7 +42,7 @@ const stats = [
   { label: "Producers onboard", value: "3.4k" },
 ];
 
-export default function LandingPage({ onStart }) {
+export default function LandingPage({ onStart, onSignOut, planLimits, profile, session }) {
   const [activeFeature, setActiveFeature] = useState(0);
 
   const activeCopy = useMemo(() => features[activeFeature], [activeFeature]);
@@ -55,6 +55,11 @@ export default function LandingPage({ onStart }) {
       })),
     []
   );
+
+  const uploadLimitMb = planLimits?.maxUploadBytes
+    ? Math.round(planLimits.maxUploadBytes / (1024 * 1024))
+    : null;
+  const renderLimit = planLimits?.monthlyRenderLimit ?? planLimits?.maxMonthlyRenders ?? "∞";
 
   return (
     <div id="top" className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
@@ -99,8 +104,17 @@ export default function LandingPage({ onStart }) {
               type="button"
               onClick={onStart}
             >
-              Try it for free
+              Open editor
             </button>
+            {onSignOut && (
+              <button
+                className="rounded-full border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-white/40 hover:text-white"
+                type="button"
+                onClick={onSignOut}
+              >
+                Sign out
+              </button>
+            )}
           </div>
         </header>
 
@@ -122,10 +136,33 @@ export default function LandingPage({ onStart }) {
                   type="button"
                   onClick={onStart}
                 >
-                  Try it for free
+                  Go to editor
                 </button>
-                <span className="text-sm text-slate-400">No credit card · Launch directly into the stem editor</span>
+                <span className="text-sm text-slate-400">
+                  Signed in as {session?.user?.email ?? "guest"}. Current plan: {planLimits?.name ?? profile?.plan ?? "Free"}.
+                </span>
               </div>
+              {planLimits && (
+                <div className="mt-6 grid gap-3 rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200 backdrop-blur">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="font-semibold uppercase tracking-[0.25em] text-indigo-200/80">Plan limits</span>
+                    <span className="text-slate-300/90">{planLimits.name}</span>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-400/80">Upload size</p>
+                      <p className="text-base font-semibold text-white">{uploadLimitMb ?? "∞"} MB</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-400/80">Monthly renders</p>
+                      <p className="text-base font-semibold text-white">{renderLimit}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    Upcoming upgrades: two-factor authentication, passkeys/WebAuthn, session logs and refresh token revocation.
+                  </p>
+                </div>
+              )}
             </div>
             <div className="relative">
               <div className="absolute inset-0 animate-pulse rounded-3xl bg-gradient-to-br from-indigo-500/30 via-purple-500/20 to-sky-400/30 blur-2xl" />
