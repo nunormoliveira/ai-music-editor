@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import "./App.css";
 
 export default function App() {
   const [prompt, setPrompt] = useState("");
@@ -17,6 +18,7 @@ export default function App() {
 
   const fileInputRef = useRef(null);
   const audioRefs = useRef({}); // { "FullMix": HTMLAudioElement, "Drums": ... }
+  const [, forceRender] = useState(0);
 
   // demo audio placeholder (substitui por URL vindo do teu backend)
   const DEMO =
@@ -91,11 +93,7 @@ export default function App() {
     if (!a) return;
     if (a.paused) a.play();
     else a.pause();
-    // força re-render para atualizar label
-    setTimeout(() => {
-      // noop — só para re-render leve
-      // (ou poderias usar state por faixa, mas mantemos simples)
-    }, 0);
+    forceRender((n) => n + 1);
   }
 
   function isPlaying(key) {
@@ -103,191 +101,224 @@ export default function App() {
     return a && !a.paused;
   }
 
+  function handleEnded(key) {
+    const a = audioRefs.current[key];
+    if (!a) return;
+    a.pause();
+    a.currentTime = 0;
+    forceRender((n) => n + 1);
+  }
+
   return (
-    <div className="min-h-screen bg-white text-gray-900">
-      {/* Header */}
-      <header className="sticky top-0 z-10 border-b bg-white/90 backdrop-blur">
-        <div className="mx-auto max-w-5xl px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-xl bg-black text-white grid place-items-center font-bold">
-              ♫
+    <div className="app-shell">
+      <div className="orb orb-one" />
+      <div className="orb orb-two" />
+
+      <div className="app-container">
+        <header className="app-header glass-card">
+          <div className="brand">
+            <div className="brand-icon">♫</div>
+            <div>
+              <h1>Pulsar Studio</h1>
+              <p>AI-enhanced mixing & stem design</p>
             </div>
-            <span className="font-semibold">AI Music Editor</span>
           </div>
-          <span className="text-sm text-gray-500">MVP • Prompt → Stems</span>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-4 py-8 space-y-8">
-        {/* Prompt + Actions */}
-        <section className="border rounded-xl p-4 shadow-sm">
-          <h2 className="text-base font-semibold mb-3">
-            Describe what you want to create or edit
-          </h2>
-
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="e.g., Add an energetic guitar riff at 1:30. Keep drums and bass."
-            className="w-full min-h-[96px] rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-black/10"
-          />
-
-          <div className="mt-4 flex flex-wrap gap-3">
-            <button
-              onClick={handleGenerate}
-              disabled={isGenerating}
-              className="rounded-lg bg-black text-white px-4 py-2 disabled:opacity-60"
-            >
-              {isGenerating ? "Generating…" : "Generate with AI"}
-            </button>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="audio/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-            <button
-              onClick={handleUploadClick}
-              disabled={uploading}
-              className="rounded-lg border px-4 py-2 disabled:opacity-60"
-            >
-              {uploading ? "Uploading…" : "Upload a song"}
-            </button>
+          <div className="header-status">
+            <span className="status-indicator" />
+            <span>Realtime stem sculpting</span>
           </div>
+        </header>
 
-          {(isGenerating || uploading) && (
-            <div className="mt-4">
-              <div className="h-2 w-full rounded bg-gray-100 overflow-hidden">
-                <div
-                  className="h-2 bg-gray-900 transition-all"
-                  style={{ width: `${progress}%` }}
-                />
+        <main className="content">
+          <section className="panel glass-card prompt-panel">
+            <div className="panel-header">
+              <div>
+                <h2>Describe your next sonic idea</h2>
+                <p>
+                  Paint the vibe, instruments, or transitions you want. Upload an existing mix to
+                  reshape it with AI.
+                </p>
               </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Processing… demo progress bar
-              </p>
+              <span className="badge">Creative mode</span>
             </div>
-          )}
-        </section>
 
-        {/* Full Mix */}
-        <section className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700">Full Mix</h3>
-          <div className="border rounded-xl p-4">
-            {mixUrl ? (
-              <Player
-                label="FullMix"
-                src={mixUrl}
-                audioRefs={audioRefs}
-                onToggle={togglePlay}
-                isPlaying={isPlaying}
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="e.g. Dreamy synthwave intro, add shimmering vocals at 0:45 and tighten the kick."
+              className="prompt-input"
+            />
+
+            <div className="action-row">
+              <button
+                onClick={handleGenerate}
+                disabled={isGenerating}
+                className="btn btn-primary"
+              >
+                {isGenerating ? (
+                  <span className="btn-inner">
+                    <span className="loader" /> Generating
+                  </span>
+                ) : (
+                  <span className="btn-inner">Generate with AI</span>
+                )}
+              </button>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="audio/*"
+                className="hidden-input"
+                onChange={handleFileChange}
               />
-            ) : (
-              <div className="h-20 rounded-xl border border-dashed grid place-items-center text-sm text-gray-400">
-                Your mix will appear here after generation or upload
+              <button
+                onClick={handleUploadClick}
+                disabled={uploading}
+                className="btn btn-secondary"
+              >
+                {uploading ? (
+                  <span className="btn-inner">
+                    <span className="loader" /> Uploading
+                  </span>
+                ) : (
+                  <span className="btn-inner">Upload a song</span>
+                )}
+              </button>
+            </div>
+
+            {(isGenerating || uploading) && (
+              <div className="progress-card">
+                <div className="progress-bar">
+                  <div className="progress-fill" style={{ width: `${progress}%` }} />
+                </div>
+                <p className="progress-meta">
+                  {isGenerating ? "Synthesising layers" : "Lifting stems"} · {progress}%
+                </p>
               </div>
             )}
-          </div>
-        </section>
+          </section>
 
-        {/* Stems */}
-        <section className="space-y-3">
-          <h3 className="text-sm font-medium text-gray-700">Stems</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {stems.map((s) => (
-              <div
-                key={s.name}
-                className="border rounded-xl p-4 shadow-sm flex flex-col gap-3"
-              >
-                <div className="text-sm font-medium">{s.name}</div>
-                {s.url ? (
-                  <Player
-                    label={s.name}
-                    src={s.url}
-                    audioRefs={audioRefs}
-                    onToggle={togglePlay}
-                    isPlaying={isPlaying}
-                    compact
-                  />
-                ) : (
-                  <div className="h-16 rounded-xl border border-dashed grid place-items-center text-xs text-gray-400">
-                    Stem will appear here
-                  </div>
-                )}
-
-                <div className="flex gap-2">
-                  <button
-                    className="rounded-lg bg-gray-900 text-white px-3 py-1.5 text-sm opacity-60 cursor-not-allowed"
-                    title="Soon"
-                  >
-                    Edit section
-                  </button>
-                  <button
-                    className="rounded-lg border px-3 py-1.5 text-sm opacity-60 cursor-not-allowed"
-                    title="Soon"
-                  >
-                    Lock stem
-                  </button>
-                </div>
+          <section className="panel">
+            <div className="section-header">
+              <div>
+                <h3>Full mix</h3>
+                <p>Preview the master with every texture combined.</p>
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
 
-        {/* Exports */}
-        <section className="pt-2">
-          <div className="flex flex-wrap gap-3">
-            <button
-              className="rounded-lg border px-4 py-2 disabled:opacity-50"
-              disabled={!mixUrl}
-              title={!mixUrl ? "Generate or upload first" : "Download WAV"}
-            >
-              Download Mix (WAV)
-            </button>
-            <button
-              className="rounded-lg border px-4 py-2 disabled:opacity-50"
-              disabled={!stems.some((s) => s.url)}
-              title={!stems.some((s) => s.url) ? "Generate or upload first" : "Download ZIP"}
-            >
-              Download Stems (ZIP)
-            </button>
-            <button
-              className="rounded-lg border px-4 py-2 opacity-60 cursor-not-allowed"
-              title="Coming soon"
-            >
-              Export MIDI (soon)
-            </button>
-          </div>
-        </section>
+            <div className="player-surface glass-card">
+              {mixUrl ? (
+                <Player
+                  label="FullMix"
+                  src={mixUrl}
+                  audioRefs={audioRefs}
+                  onToggle={togglePlay}
+                  isPlaying={isPlaying}
+                  onEnded={handleEnded}
+                />
+              ) : (
+                <div className="empty-state">
+                  <div className="empty-icon">🎧</div>
+                  <p>Your generated mix will land here—craft a prompt or upload a track.</p>
+                </div>
+              )}
+            </div>
+          </section>
 
-        <footer className="text-xs text-gray-400 pt-8">
-          Demo UI — wire your backend endpoints to make generate/upload real. Replace placeholder audio URLs with signed
-          URLs from your API.
-        </footer>
-      </main>
+          <section className="panel">
+            <div className="section-header">
+              <div>
+                <h3>Isolated stems</h3>
+                <p>Solo each layer to sculpt transitions and dynamics.</p>
+              </div>
+            </div>
+
+            <div className="stems-grid">
+              {stems.map((s) => (
+                <div key={s.name} className="stem-card glass-card">
+                  <div className="stem-header">
+                    <span className="stem-name">{s.name}</span>
+                    <span className="stem-chip">AI</span>
+                  </div>
+                  {s.url ? (
+                    <Player
+                      label={s.name}
+                      src={s.url}
+                      audioRefs={audioRefs}
+                      onToggle={togglePlay}
+                      isPlaying={isPlaying}
+                      onEnded={handleEnded}
+                      compact
+                    />
+                  ) : (
+                    <div className="stem-empty">
+                      <span>Waiting for stem to be rendered…</span>
+                    </div>
+                  )}
+
+                  <div className="stem-actions">
+                    <button className="btn btn-ghost" disabled title="Coming soon">
+                      Edit section
+                    </button>
+                    <button className="btn btn-ghost" disabled title="Coming soon">
+                      Lock stem
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="panel">
+            <div className="section-header">
+              <div>
+                <h3>Export assets</h3>
+                <p>Bounce high-quality audio for your DAW session.</p>
+              </div>
+            </div>
+
+            <div className="export-actions">
+              <button
+                className="btn btn-outline"
+                disabled={!mixUrl}
+                title={!mixUrl ? "Generate or upload first" : "Download WAV"}
+              >
+                Download mix (WAV)
+              </button>
+              <button
+                className="btn btn-outline"
+                disabled={!stems.some((s) => s.url)}
+                title={!stems.some((s) => s.url) ? "Generate or upload first" : "Download ZIP"}
+              >
+                Download stems (ZIP)
+              </button>
+              <button className="btn btn-ghost" disabled title="Coming soon">
+                Export MIDI (soon)
+              </button>
+            </div>
+          </section>
+
+          <footer className="footer-note">
+            Demo UI — plug in your backend endpoints for generation & uploads, then replace the placeholder
+            audio URLs with secure links from your API.
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }
 
-function Player({ label, src, audioRefs, onToggle, isPlaying, compact = false }) {
+function Player({ label, src, audioRefs, onToggle, isPlaying, onEnded, compact = false }) {
   return (
-    <div className={`w-full ${compact ? "p-2" : "p-3"} rounded-xl border flex items-center gap-3`}>
-      <button
-        onClick={() => onToggle(label)}
-        className="rounded-lg bg-black text-white px-3 py-1.5"
-      >
-        {isPlaying(label) ? "Pause" : "Play"}
+    <div className={`player ${compact ? "player-compact" : ""}`}>
+      <button onClick={() => onToggle(label)} className="player-button" aria-label="Toggle playback">
+        {isPlaying(label) ? "❚❚" : "▶"}
       </button>
 
-      <div className="flex-1 min-w-0">
-        <div className="h-2 w-full rounded bg-gray-100 overflow-hidden">
-          {/* barra fake só para dar feedback visual */}
-          <div
-            className={`h-2 ${isPlaying(label) ? "bg-gray-900 w-full" : "bg-gray-300 w-0"}`}
-            style={{ transition: "width 8s linear" }}
-          />
+      <div className="player-details">
+        <span className="player-label">{label}</span>
+        <div className="progress-track">
+          <div className={`progress-visual ${isPlaying(label) ? "is-playing" : ""}`} />
         </div>
       </div>
 
@@ -295,7 +326,7 @@ function Player({ label, src, audioRefs, onToggle, isPlaying, compact = false })
         ref={(el) => (audioRefs.current[label] = el)}
         src={src}
         preload="none"
-        onEnded={() => onToggle(label)} // volta ao estado "Pause" no fim
+        onEnded={() => onEnded(label)}
       />
     </div>
   );
