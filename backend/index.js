@@ -7,6 +7,10 @@ import path from "path";
 import fs from "fs";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
+import 'dotenv/config'; // se estiveres a usar módulos ES (type: "module" no package.json)
+console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+console.log("SERVICE_ROLE_KEY:", process.env.SUPABASE_SERVICE_ROLE?.slice(0, 10) + '...');
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
