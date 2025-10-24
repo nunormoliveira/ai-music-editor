@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 export default function App() {
@@ -20,19 +20,7 @@ export default function App() {
   const audioRefs = useRef({}); // { "FullMix": HTMLAudioElement, "Drums": ... }
   const [, forceRender] = useState(0);
 
-  // demo audio placeholder (substitui por URL vindo do teu backend)
-  const DEMO =
-    "https://cdn.pixabay.com/download/audio/2022/03/15/audio_3dbd2dcf8a.mp3?filename=lofi-study-112191.mp3";
-
-  async function fakeProgress(cb) {
-    setProgress(5);
-    const steps = [15, 28, 42, 57, 71, 84, 93, 100];
-    for (const p of steps) {
-      await new Promise((r) => setTimeout(r, 280));
-      setProgress(p);
-    }
-    cb && cb();
-  }
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   async function handleGenerate() {
     if (!prompt.trim()) return;
@@ -42,19 +30,12 @@ export default function App() {
 
     try {
       // 🔌 Troca por POST /api/generate { prompt }
-      await fakeProgress(() => {
-        setMixUrl(DEMO);
-        setStems((prev) =>
-          prev.map((s) => ({
-            ...s,
-            url: DEMO, // no real: viria do teu backend (stems por instrumento)
-          }))
-        );
-      });
+      await new Promise((resolve) => setTimeout(resolve, 600));
     } catch (e) {
       console.error(e);
     } finally {
       setIsGenerating(false);
+      setProgress(0);
     }
   }
 
@@ -70,20 +51,55 @@ export default function App() {
     setProgress(0);
 
     try {
-      // 🔌 Troca por upload real: POST /api/upload (FormData), depois polling /api/jobs/:id
-      await fakeProgress(() => {
-        setMixUrl(DEMO);
-        setStems((prev) =>
-          prev.map((s) => ({
-            ...s,
-            url: DEMO,
-          }))
-        );
+      const formData = new FormData();
+      formData.append("audio", file);
+
+      const data = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `${API_BASE_URL}/api/upload`);
+        xhr.responseType = "json";
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const pct = Math.round((event.loaded / event.total) * 100);
+            setProgress(pct);
+          }
+        };
+
+        xhr.onerror = () => {
+          reject(new Error("Network error during upload"));
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(xhr.response);
+          } else {
+            reject(new Error(xhr.response?.error || "Upload failed"));
+          }
+        };
+
+        xhr.send(formData);
       });
+
+      const audioUrl = data?.audioUrl;
+      if (!audioUrl) {
+        throw new Error("Resposta inválida do servidor");
+      }
+
+      setMixUrl(audioUrl);
+      setStems((prev) =>
+        prev.map((s) => ({
+          ...s,
+          url: null,
+        }))
+      );
+      setProgress(100);
     } catch (e) {
       console.error(e);
+      alert(e.message || "Falha no upload");
     } finally {
       setUploading(false);
+      setProgress(0);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }
@@ -188,15 +204,15 @@ export default function App() {
 
             {(isGenerating || uploading) && (
               <div className="progress-card">
-                <div className="progress-bar">
-                  <div className="progress-fill" style={{ width: `${progress}%` }} />
-                </div>
-                <p className="progress-meta">
-                  {isGenerating ? "Synthesising layers" : "Lifting stems"} · {progress}%
-                </p>
+              <div className="progress-bar">
+                <div className="progress-fill" style={{ width: `${progress}%` }} />
               </div>
-            )}
-          </section>
+              <p className="progress-meta">
+                {isGenerating ? "Synthesising layers" : "Uploading song"} · {progress}%
+              </p>
+            </div>
+          )}
+        </section>
 
           <section className="panel">
             <div className="section-header">
@@ -308,7 +324,65 @@ export default function App() {
   );
 }
 
+function formatTime(seconds) {
+  if (!seconds || Number.isNaN(seconds)) return "0:00";
+  const floored = Math.floor(seconds);
+  const mins = Math.floor(floored / 60);
+  const secs = floored % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+}
+
 function Player({ label, src, audioRefs, onToggle, isPlaying, onEnded, compact = false }) {
+  const audioRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+    const handleLoaded = () => {
+      if (!Number.isNaN(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
+
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("loadedmetadata", handleLoaded);
+    audio.addEventListener("durationchange", handleLoaded);
+
+    return () => {
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("loadedmetadata", handleLoaded);
+      audio.removeEventListener("durationchange", handleLoaded);
+    };
+  }, [src]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.load();
+    }
+    setCurrentTime(0);
+    setDuration(0);
+  }, [src]);
+
+  const handleSeek = (event) => {
+    const audio = audioRefs.current[label];
+    if (!audio) return;
+    const newTime = Number(event.target.value);
+    audio.currentTime = newTime;
+    if (audio.paused) {
+      setCurrentTime(newTime);
+    }
+  };
+
+  const handleEnded = () => {
+    setCurrentTime(0);
+    onEnded(label);
+  };
+
   return (
     <div className={`player ${compact ? "player-compact" : ""}`}>
       <button onClick={() => onToggle(label)} className="player-button" aria-label="Toggle playback">
@@ -316,17 +390,34 @@ function Player({ label, src, audioRefs, onToggle, isPlaying, onEnded, compact =
       </button>
 
       <div className="player-details">
-        <span className="player-label">{label}</span>
-        <div className="progress-track">
-          <div className={`progress-visual ${isPlaying(label) ? "is-playing" : ""}`} />
+        <div className="player-label-row">
+          <span className="player-label">{label}</span>
+          {duration > 0 && <span className="player-duration">{formatTime(duration)}</span>}
+        </div>
+        <div className="player-timeline">
+          <span className="player-time">{formatTime(currentTime)}</span>
+          <input
+            type="range"
+            min={0}
+            max={duration || 0}
+            step="0.01"
+            value={Math.min(currentTime, duration || 0)}
+            onChange={handleSeek}
+            className="player-slider"
+            disabled={!src || !duration}
+          />
+          <span className="player-time">{formatTime(duration)}</span>
         </div>
       </div>
 
       <audio
-        ref={(el) => (audioRefs.current[label] = el)}
+        ref={(el) => {
+          audioRef.current = el;
+          audioRefs.current[label] = el;
+        }}
         src={src}
-        preload="none"
-        onEnded={() => onEnded(label)}
+        preload="metadata"
+        onEnded={handleEnded}
       />
     </div>
   );

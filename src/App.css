@@ -392,27 +392,84 @@
   font-size: 0.85rem;
 }
 
-.progress-track {
-  position: relative;
-  width: 100%;
+.player-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-duration {
+  font-size: 0.75rem;
+  color: rgba(198, 210, 255, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+
+.player-timeline {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-time {
+  font-size: 0.75rem;
+  color: rgba(198, 210, 255, 0.6);
+  width: 3.5ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.player-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
   height: 6px;
   border-radius: 999px;
-  background: rgba(59, 130, 246, 0.25);
-  overflow: hidden;
-}
-
-.progress-visual {
-  position: absolute;
-  inset: 0;
   background: linear-gradient(120deg, rgba(59, 130, 246, 0.8), rgba(45, 212, 191, 0.9));
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 0.6s ease;
+  outline: none;
+  cursor: pointer;
+  position: relative;
 }
 
-.progress-visual.is-playing {
-  animation: shimmer 4.5s linear infinite;
-  transform: scaleX(1);
+.player-slider:disabled {
+  cursor: not-allowed;
+  background: rgba(148, 163, 255, 0.25);
+}
+
+.player-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #f8fafc;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.player-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+
+.player-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #f8fafc;
+  border: none;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.player-slider:disabled::-webkit-slider-thumb,
+.player-slider:disabled::-moz-range-thumb {
+  background: rgba(248, 250, 252, 0.65);
+  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+}
+
+.player-slider::-moz-range-thumb:hover {
+  transform: scale(1.08);
 }
 
 .hidden-input {
@@ -441,23 +498,6 @@
   bottom: -160px;
   right: -140px;
   background: radial-gradient(circle at center, rgba(34, 211, 238, 0.55), rgba(14, 23, 42, 0));
-}
-
-@keyframes shimmer {
-  0% {
-    transform: scaleX(0);
-    opacity: 0.6;
-  }
-  10% {
-    transform: scaleX(0.2);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(1);
-    opacity: 0.7;
-  }
 }
 
 @keyframes spin {
