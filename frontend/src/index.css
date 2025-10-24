@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 :root {
   font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   font-synthesis: none;
@@ -6,6 +8,11 @@
   -moz-osx-font-smoothing: grayscale;
   color: #eef2ff;
   background-color: #020617;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 * {
