@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
 const AuthContext = createContext({
   session: null,
@@ -43,6 +43,9 @@ const FALLBACK_PLANS = [
   },
 ];
 
+const MISSING_SUPABASE_ERROR_MESSAGE =
+  "Supabase credentials are not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable authentication.";
+
 async function fetchPlanCatalog() {
   try {
     const response = await fetch("/api/plan-limits");
@@ -83,6 +86,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setLoading(false);
+      setError(new Error(MISSING_SUPABASE_ERROR_MESSAGE));
+      return undefined;
+    }
+
     let mounted = true;
 
     async function initSession() {
@@ -119,6 +128,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setProfile(null);
+      return;
+    }
+
     async function loadProfile() {
       if (!session?.user) {
         setProfile(null);
@@ -191,6 +205,11 @@ export function AuthProvider({ children }) {
       plansCatalog,
       error,
       async signInWithGoogle() {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         setError(null);
         const { error: authError } = await supabase.auth.signInWithOAuth({
           provider: "google",
@@ -205,6 +224,11 @@ export function AuthProvider({ children }) {
         }
       },
       async signInWithPassword(email, password) {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         setError(null);
         const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
         if (authError) {
@@ -213,6 +237,11 @@ export function AuthProvider({ children }) {
         }
       },
       async signUpWithPassword(email, password) {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         setError(null);
         const { error: authError } = await supabase.auth.signUp({ email, password });
         if (authError) {
@@ -221,6 +250,11 @@ export function AuthProvider({ children }) {
         }
       },
       async sendMagicLink(email) {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         setError(null);
         const { error: authError } = await supabase.auth.signInWithOtp({
           email,
@@ -234,6 +268,11 @@ export function AuthProvider({ children }) {
         }
       },
       async signOut() {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         setError(null);
         const { error: signOutError } = await supabase.auth.signOut();
         if (signOutError) {
@@ -242,6 +281,11 @@ export function AuthProvider({ children }) {
         }
       },
       async refreshProfile() {
+        if (!isSupabaseConfigured) {
+          const configurationError = new Error(MISSING_SUPABASE_ERROR_MESSAGE);
+          setError(configurationError);
+          throw configurationError;
+        }
         if (!session?.user) return;
         const { data, error: profileError } = await supabase
           .from("profiles")
