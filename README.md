@@ -31,6 +31,16 @@ npm run dev
 
 The development server listens on port `5173` by default.
 
+#### Environment variables
+
+Copy the provided example file and customise it with your Supabase project credentials and local API endpoint:
+
+```bash
+cp frontend/.env.example frontend/.env.local
+```
+
+Restart the Vite server after editing the variables so the new configuration is picked up.
+
 ### Backend (Express API)
 
 ```bash
