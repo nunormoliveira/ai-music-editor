@@ -94,6 +94,52 @@ export function AuthProvider({ children }) {
 
     let mounted = true;
 
+    async function exchangeOAuthCode() {
+      const currentUrl = new URL(window.location.href);
+      const hasCode = currentUrl.searchParams.has("code");
+      const hasState = currentUrl.searchParams.has("state");
+
+      if (!hasCode || !hasState) {
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(
+          currentUrl.toString(),
+        );
+
+        if (exchangeError) {
+          throw exchangeError;
+        }
+
+        if (!mounted) return;
+
+        setSession(data.session ?? null);
+        setError(null);
+      } catch (exchangeError) {
+        console.error("Failed to exchange OAuth code", exchangeError);
+        if (mounted) {
+          setError(exchangeError);
+        }
+      } finally {
+        if (!mounted) return;
+
+        currentUrl.searchParams.delete("code");
+        currentUrl.searchParams.delete("state");
+        currentUrl.searchParams.delete("scope");
+        currentUrl.searchParams.delete("auth_code");
+
+        const cleanedUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+        window.history.replaceState({}, document.title, cleanedUrl);
+
+        setLoading(false);
+      }
+    }
+
+    exchangeOAuthCode();
+
     async function initSession() {
       try {
         const { data, error: sessionError } = await supabase.auth.getSession();
