@@ -52,6 +52,11 @@ async function fetchPlanCatalog() {
     if (!response.ok) {
       throw new Error("Unable to load plan catalog");
     }
+    const contentType = response.headers.get("content-type") ?? "";
+    if (!contentType.includes("application/json")) {
+      throw new Error(`Unexpected response type: ${contentType || "unknown"}`);
+    }
+
     const payload = await response.json();
     return payload?.plans ?? [];
   } catch (error) {
