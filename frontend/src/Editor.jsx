@@ -26,7 +26,19 @@ export default function Editor({ onNavigateHome, accessToken, planLimits, profil
   const audioRefs = useRef({});
   const [, forceRender] = useState(0);
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const API_BASE_URL = useMemo(() => {
+    const envUrl = import.meta.env.VITE_API_URL?.trim();
+    if (envUrl) return envUrl.replace(/\/$/, "");
+
+    if (typeof window !== "undefined") {
+      const { hostname } = window.location;
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        return "http://localhost:5000";
+      }
+    }
+
+    return "https://risibly-uncatholical-hillary.ngrok-free.dev";
+  }, []);
 
   useEffect(() => {
     const nextCount = planLimits?.monthlyRenderCount ?? profile?.monthly_render_count ?? 0;
