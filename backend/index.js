@@ -7,7 +7,7 @@ import path from "path";
 import fs from "fs";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
-import 'dotenv/config'; // se estiveres a usar módulos ES (type: "module" no package.json)
+import "dotenv/config"; // se estiveres a usar módulos ES (type: "module" no package.json)
 console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
 const envServiceRoleKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
@@ -83,6 +83,36 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   );
 }
 
+function redactToken(token) {
+  if (!token) return token;
+  if (token.length <= 8) {
+    return "*".repeat(token.length);
+  }
+  return `${token.slice(0, 4)}...${token.slice(-4)}`;
+}
+
+function logAuthEvent(message, details = {}) {
+  const safeDetails = { ...details };
+  if (safeDetails.accessToken) {
+    safeDetails.accessToken = redactToken(String(safeDetails.accessToken));
+  }
+  if (safeDetails.serviceRoleKey) {
+    safeDetails.serviceRoleKey = redactToken(String(safeDetails.serviceRoleKey));
+  }
+  console.log(`[Auth] ${message}`, safeDetails);
+}
+
+function logAuthError(message, details = {}) {
+  const safeDetails = { ...details };
+  if (safeDetails.accessToken) {
+    safeDetails.accessToken = redactToken(String(safeDetails.accessToken));
+  }
+  if (safeDetails.serviceRoleKey) {
+    safeDetails.serviceRoleKey = redactToken(String(safeDetails.serviceRoleKey));
+  }
+  console.error(`[Auth] ${message}`, safeDetails);
+}
+
 function createUploadMiddleware(maxUploadBytes) {
   return multer({
     storage,
@@ -124,10 +154,20 @@ function buildSignedDownloadUrl(filename, req, ttlSeconds = SIGNED_URL_TTL_SECON
 }
 
 async function fetchSupabaseUser(accessToken) {
-  if (!accessToken || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  if (!accessToken) {
+    logAuthError("Missing access token while fetching Supabase user");
     return null;
   }
 
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+    logAuthError("Supabase credentials missing when fetching user", {
+      hasUrl: Boolean(SUPABASE_URL),
+      hasServiceRoleKey: Boolean(SUPABASE_SERVICE_ROLE_KEY),
+    });
+    return null;
+  }
+
+  logAuthEvent("Fetching Supabase user", { hasUrl: Boolean(SUPABASE_URL) });
   const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
     method: "GET",
     headers: {
@@ -137,10 +177,17 @@ async function fetchSupabaseUser(accessToken) {
   });
 
   if (!response.ok) {
+    const errorBody = await response.text();
+    logAuthError("Failed to fetch Supabase user", {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorBody,
+    });
     return null;
   }
 
   const body = await response.json();
+  logAuthEvent("Fetched Supabase user", { userId: body?.id, email: body?.email });
   return body;
 }
 
@@ -163,15 +210,23 @@ async function fetchProfile(userId) {
   });
 
   if (!response.ok) {
-    console.error("Unable to fetch profile", await response.text());
+    const errorBody = await response.text();
+    logAuthError("Unable to fetch profile", {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorBody,
+      userId,
+    });
     return null;
   }
 
   const profiles = await response.json();
   if (!Array.isArray(profiles) || profiles.length === 0) {
+    logAuthEvent("No Supabase profile found", { userId });
     return null;
   }
 
+  logAuthEvent("Fetched Supabase profile", { userId, plan: profiles[0]?.plan });
   return profiles[0];
 }
 
@@ -182,6 +237,10 @@ async function ensureProfile(user) {
 
   const existingProfile = await fetchProfile(user.id);
   if (existingProfile) {
+    logAuthEvent("Reusing existing Supabase profile", {
+      userId: user.id,
+      plan: existingProfile.plan,
+    });
     return existingProfile;
   }
 
@@ -205,12 +264,23 @@ async function ensureProfile(user) {
   });
 
   if (!response.ok) {
-    console.error("Unable to provision profile", await response.text());
+    const errorBody = await response.text();
+    logAuthError("Unable to provision profile", {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorBody,
+      userId: user.id,
+    });
     return null;
   }
 
   const body = await response.json();
-  return Array.isArray(body) ? body[0] : body;
+  const createdProfile = Array.isArray(body) ? body[0] : body;
+  logAuthEvent("Provisioned new Supabase profile", {
+    userId: createdProfile?.id,
+    plan: createdProfile?.plan,
+  });
+  return createdProfile;
 }
 
 async function incrementRenderCount(userId, currentCount) {
@@ -235,7 +305,13 @@ async function incrementRenderCount(userId, currentCount) {
   });
 
   if (!response.ok) {
-    console.error("Failed to increment render count", await response.text());
+    const errorBody = await response.text();
+    logAuthError("Failed to increment render count", {
+      status: response.status,
+      statusText: response.statusText,
+      body: errorBody,
+      userId,
+    });
     return null;
   }
 
@@ -247,20 +323,34 @@ async function authenticateRequest(req, res, next) {
   try {
     const authHeader = req.get("authorization") || req.get("Authorization");
     if (!authHeader?.startsWith("Bearer ")) {
+      logAuthError("Missing authorization header on protected route", {
+        path: req.path,
+      });
       return res.status(401).json({ error: "Missing authorization header" });
     }
 
     const accessToken = authHeader.slice("Bearer ".length).trim();
     if (!accessToken) {
+      logAuthError("Authorization header was present but token was empty", {
+        path: req.path,
+      });
       return res.status(401).json({ error: "Invalid authorization header" });
     }
 
     const supabaseUser = await fetchSupabaseUser(accessToken);
     if (!supabaseUser?.id) {
+      logAuthError("Supabase user could not be resolved", {
+        path: req.path,
+      });
       return res.status(401).json({ error: "Invalid access token" });
     }
 
     const profile = (await ensureProfile(supabaseUser)) || { plan: "free", role: "user" };
+    logAuthEvent("Authenticated request", {
+      path: req.path,
+      userId: supabaseUser.id,
+      plan: profile?.plan,
+    });
     const planLimits = getPlanLimits(profile.plan);
 
     const uploadOverrideBytes = profile.upload_override_bytes;
