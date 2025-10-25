@@ -410,9 +410,47 @@ function verifySignature(filename, expires, token) {
   }
 }
 
+const DEFAULT_ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://localhost:4173",
+  "http://127.0.0.1:4173",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+const additionalAllowedOrigins = (process.env.CORS_ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([...DEFAULT_ALLOWED_ORIGINS, ...additionalAllowedOrigins]);
+
+const allowedOriginPatterns = [
+  /^https?:\/\/localhost(?::\d+)?$/i,
+  /^https?:\/\/127\.0\.0\.1(?::\d+)?$/i,
+  /^https:\/\/[a-z0-9-]+\.ngrok-free\.app$/i,
+];
+
+function isOriginAllowed(origin) {
+  if (!origin) return true; // Same-origin or non-browser requests
+  if (allowedOrigins.has(origin)) return true;
+  return allowedOriginPatterns.some((pattern) => pattern.test(origin));
+}
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (isOriginAllowed(origin)) {
+      return callback(null, true);
+    }
+    console.warn("Blocked CORS request from origin:", origin);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+};
+
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/api/health", (req, res) => {
