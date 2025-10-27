@@ -1,6 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { isSupabaseConfigured, supabase } from "../lib/supabaseClient";
 
+const configuredEmailRedirectTo = import.meta.env.VITE_SUPABASE_EMAIL_REDIRECT_TO?.trim();
+const configuredOAuthRedirectTo = import.meta.env.VITE_SUPABASE_OAUTH_REDIRECT_TO?.trim();
+
 const AuthContext = createContext({
   session: null,
   user: null,
@@ -73,6 +76,29 @@ function mergePlanLimitsFromCatalog(planKey, catalog, profileOverrideBytes) {
     overrides.maxUploadBytes = profileOverrideBytes;
   }
   return { ...base, ...overrides };
+}
+
+function resolveRedirectUrl(explicitUrl, { fallbackPath, useOriginOnly } = {}) {
+  if (explicitUrl) {
+    return explicitUrl;
+  }
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
+  const url = new URL(window.location.href);
+  if (useOriginOnly) {
+    return url.origin;
+  }
+
+  url.hash = "";
+  url.search = "";
+
+  if (fallbackPath) {
+    url.pathname = fallbackPath;
+  }
+
+  return url.toString();
 }
 
 export function AuthProvider({ children }) {
@@ -280,12 +306,16 @@ export function AuthProvider({ children }) {
           throw configurationError;
         }
         setError(null);
+        const redirectTo = resolveRedirectUrl(configuredOAuthRedirectTo, { useOriginOnly: true });
+        const oauthOptions = {
+          queryParams: { prompt: "select_account" },
+        };
+        if (redirectTo) {
+          oauthOptions.redirectTo = redirectTo;
+        }
         const { error: authError } = await supabase.auth.signInWithOAuth({
           provider: "google",
-          options: {
-            queryParams: { prompt: "select_account" },
-            redirectTo: window.location.origin,
-          },
+          options: oauthOptions,
         });
         if (authError) {
           setError(authError);
@@ -312,7 +342,7 @@ export function AuthProvider({ children }) {
           throw configurationError;
         }
         setError(null);
-        const emailRedirectTo = typeof window !== "undefined" ? window.location.origin : undefined;
+        const emailRedirectTo = resolveRedirectUrl(configuredEmailRedirectTo);
         const { error: authError } = await supabase.auth.signUp({
           email,
           password,
@@ -330,11 +360,14 @@ export function AuthProvider({ children }) {
           throw configurationError;
         }
         setError(null);
+        const emailRedirectTo = resolveRedirectUrl(configuredEmailRedirectTo);
+        const otpOptions = {};
+        if (emailRedirectTo) {
+          otpOptions.emailRedirectTo = emailRedirectTo;
+        }
         const { error: authError } = await supabase.auth.signInWithOtp({
           email,
-          options: {
-            emailRedirectTo: window.location.origin,
-          },
+          options: otpOptions,
         });
         if (authError) {
           setError(authError);
