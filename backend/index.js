@@ -560,6 +560,6 @@ app.use((err, req, res, next) => {
 const envPort = globalThis.process?.env?.PORT;
 const PORT = envPort ? Number(envPort) : 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`File upload server listening on port ${PORT}`);
 });
