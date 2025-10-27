@@ -78,27 +78,58 @@ function mergePlanLimitsFromCatalog(planKey, catalog, profileOverrideBytes) {
   return { ...base, ...overrides };
 }
 
+function isLocalhostOrigin(origin) {
+  return /^https?:\/\/(localhost|127\.0\.0\.1)(?::\d+)?$/i.test(origin);
+}
+
 function resolveRedirectUrl(explicitUrl, { fallbackPath, useOriginOnly } = {}) {
+  const hasWindow = typeof window !== "undefined";
+  const runtimeUrl = hasWindow ? new URL(window.location.href) : null;
+
+  const normaliseAgainstRuntimeOrigin = (url) => {
+    if (!runtimeUrl) {
+      return url;
+    }
+
+    if (!isLocalhostOrigin(runtimeUrl.origin) && isLocalhostOrigin(url.origin)) {
+      url.protocol = runtimeUrl.protocol;
+      url.host = runtimeUrl.host;
+    }
+
+    return url;
+  };
+
   if (explicitUrl) {
-    return explicitUrl;
+    let resolvedUrl;
+    try {
+      resolvedUrl = runtimeUrl ? new URL(explicitUrl, runtimeUrl.origin) : new URL(explicitUrl);
+    } catch (error) {
+      console.warn("Ignoring invalid redirect URL", explicitUrl, error);
+    }
+
+    if (resolvedUrl) {
+      const normalisedUrl = normaliseAgainstRuntimeOrigin(resolvedUrl);
+      return useOriginOnly ? normalisedUrl.origin : normalisedUrl.toString();
+    }
   }
-  if (typeof window === "undefined") {
+
+  if (!runtimeUrl) {
     return undefined;
   }
 
-  const url = new URL(window.location.href);
   if (useOriginOnly) {
-    return url.origin;
+    return runtimeUrl.origin;
   }
 
-  url.hash = "";
-  url.search = "";
+  const fallbackUrl = new URL(runtimeUrl.toString());
+  fallbackUrl.hash = "";
+  fallbackUrl.search = "";
 
   if (fallbackPath) {
-    url.pathname = fallbackPath;
+    fallbackUrl.pathname = fallbackPath;
   }
 
-  return url.toString();
+  return fallbackUrl.toString();
 }
 
 export function AuthProvider({ children }) {
@@ -155,17 +186,17 @@ export function AuthProvider({ children }) {
           setError(exchangeError);
         }
       } finally {
-        if (!mounted) return;
+        if (mounted) {
+          currentUrl.searchParams.delete("code");
+          currentUrl.searchParams.delete("state");
+          currentUrl.searchParams.delete("scope");
+          currentUrl.searchParams.delete("auth_code");
 
-        currentUrl.searchParams.delete("code");
-        currentUrl.searchParams.delete("state");
-        currentUrl.searchParams.delete("scope");
-        currentUrl.searchParams.delete("auth_code");
+          const cleanedUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+          window.history.replaceState({}, document.title, cleanedUrl);
 
-        const cleanedUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
-        window.history.replaceState({}, document.title, cleanedUrl);
-
-        setLoading(false);
+          setLoading(false);
+        }
       }
     }
 
@@ -204,6 +235,8 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
+  const userId = session?.user?.id ?? null;
+
   useEffect(() => {
     if (!isSupabaseConfigured) {
       setProfile(null);
@@ -211,7 +244,7 @@ export function AuthProvider({ children }) {
     }
 
     async function loadProfile() {
-      if (!session?.user) {
+      if (!userId) {
         setProfile(null);
         return;
       }
@@ -219,7 +252,7 @@ export function AuthProvider({ children }) {
         const { data, error: profileError } = await supabase
           .from("profiles")
           .select("id, plan, role, monthly_render_count, monthly_render_limit, upload_override_bytes")
-          .eq("id", session.user.id)
+          .eq("id", userId)
           .maybeSingle();
 
         if (profileError) {
@@ -230,7 +263,7 @@ export function AuthProvider({ children }) {
           const { data: inserted, error: insertError } = await supabase
             .from("profiles")
             .insert({
-              id: session.user.id,
+              id: userId,
               plan: "free",
               role: "user",
               monthly_render_count: 0,
@@ -258,7 +291,7 @@ export function AuthProvider({ children }) {
         if (missingProfileTable) {
           console.warn("profiles table missing; using fallback profile limits");
           setProfile({
-            id: session.user.id,
+            id: userId,
             plan: "free",
             role: "user",
             monthly_render_count: 0,
@@ -274,7 +307,7 @@ export function AuthProvider({ children }) {
     }
 
     loadProfile();
-  }, [session?.user?.id]);
+  }, [userId]);
 
   const planLimits = useMemo(() => {
     if (!profile) return null;
@@ -393,12 +426,13 @@ export function AuthProvider({ children }) {
           setError(configurationError);
           throw configurationError;
         }
-        if (!session?.user) return;
+        const currentUserId = session?.user?.id;
+        if (!currentUserId) return;
         try {
           const { data, error: profileError } = await supabase
             .from("profiles")
             .select("id, plan, role, monthly_render_count, monthly_render_limit, upload_override_bytes")
-            .eq("id", session.user.id)
+            .eq("id", currentUserId)
             .maybeSingle();
           if (profileError) {
             throw profileError;
@@ -423,6 +457,7 @@ export function AuthProvider({ children }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   return useContext(AuthContext);
 }
