@@ -225,6 +225,24 @@ export function AuthProvider({ children }) {
         }
       } catch (profileErr) {
         console.error("Failed to load profile", profileErr);
+
+        const missingProfileTable =
+          profileErr?.code === "PGRST205" || profileErr?.message?.includes("public.profiles");
+
+        if (missingProfileTable) {
+          console.warn("profiles table missing; using fallback profile limits");
+          setProfile({
+            id: session.user.id,
+            plan: "free",
+            role: "user",
+            monthly_render_count: 0,
+            monthly_render_limit: null,
+            upload_override_bytes: null,
+          });
+          setError(null);
+          return;
+        }
+
         setError(profileErr);
       }
     }
@@ -338,15 +356,27 @@ export function AuthProvider({ children }) {
           throw configurationError;
         }
         if (!session?.user) return;
-        const { data, error: profileError } = await supabase
-          .from("profiles")
-          .select("id, plan, role, monthly_render_count, monthly_render_limit, upload_override_bytes")
-          .eq("id", session.user.id)
-          .maybeSingle();
-        if (profileError) {
-          throw profileError;
+        try {
+          const { data, error: profileError } = await supabase
+            .from("profiles")
+            .select("id, plan, role, monthly_render_count, monthly_render_limit, upload_override_bytes")
+            .eq("id", session.user.id)
+            .maybeSingle();
+          if (profileError) {
+            throw profileError;
+          }
+          setProfile(data);
+        } catch (profileErr) {
+          const missingProfileTable =
+            profileErr?.code === "PGRST205" || profileErr?.message?.includes("public.profiles");
+          if (missingProfileTable) {
+            console.warn("profiles table missing during refresh; keeping existing profile");
+            setError(null);
+            return;
+          }
+          setError(profileErr);
+          throw profileErr;
         }
-        setProfile(data);
       },
     }),
     [error, loading, planLimits, plansCatalog, profile, session]
