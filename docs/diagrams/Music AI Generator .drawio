@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
   <diagram name="Página-1" id="8vHHZHL2xvlVmI4xFZ_R">
-    <mxGraphModel dx="1678" dy="2043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="1912" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -12,26 +12,23 @@
             <mxRectangle height="30" width="180" x="20" y="130" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="pCsqk6dbK2nvVDnFw2cK-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="Frontend (React + Vite)&#xa;- Landing&#xa;- AuthView&#xa;- Editor (player/waveform)&#xa;- Plan usage display" vertex="1">
+        <mxCell id="pCsqk6dbK2nvVDnFw2cK-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="Frontend (React + Vite)&lt;br&gt;- Landing&lt;br&gt;- AuthView&lt;br&gt;- Editor (player/waveform)&lt;br&gt;- Plan usage display&lt;div&gt;- Prompt-based edits&lt;br&gt;- Stem editing / generation&lt;/div&gt;" vertex="1">
           <mxGeometry height="150" width="320" x="60" y="190" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="Backend API (Express)&#xa;- GET /api/health&#xa;- GET /api/plan-limits&#xa;- POST /api/upload&#xa;- GET /api/download/:fileName&#xa;- auth/limits/usage enforcement" vertex="1">
           <mxGeometry height="170" width="320" x="420" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="pCsqk6dbK2nvVDnFw2cK-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;dashed=1;strokeWidth=2;" value="(Future) AI features in UI&#xa;- Prompt-based edits&#xa;- Stem editing / generation" vertex="1">
-          <mxGeometry height="120" width="320" x="60" y="380" as="geometry" />
-        </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="Supabase Auth&#xa;- Google OAuth&#xa;- email/password&#xa;- magic links&#xa;- JWT session" vertex="1">
-          <mxGeometry height="140" width="240" x="800" y="130" as="geometry" />
+          <mxGeometry height="140" width="240" x="930" y="110" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="Supabase Database&#xa;- profiles&#xa;- plan &amp; limits&#xa;- renders/month usage" vertex="1">
-          <mxGeometry height="120" width="240" x="800" y="290" as="geometry" />
+          <mxGeometry height="120" width="240" x="930" y="290" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;strokeWidth=2;" value="File Storage&#xa;(local now / object storage later)&#xa;- uploaded audio&#xa;- outputs (mix/stems)" vertex="1">
-          <mxGeometry height="110" width="240" x="800" y="440" as="geometry" />
+          <mxGeometry height="110" width="240" x="830" y="430" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;dashed=1;strokeWidth=2;" value="AI Processing Engine (Future)&#xa;- stem separation&#xa;- generate music&#xa;- prompt processing&#xa;- async jobs/status" vertex="1">
-          <mxGeometry height="120" width="240" x="800" y="580" as="geometry" />
+          <mxGeometry height="120" width="240" x="560" y="610" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-10" edge="1" parent="1" source="pCsqk6dbK2nvVDnFw2cK-1" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" target="pCsqk6dbK2nvVDnFw2cK-3" value="UI actions">
           <mxGeometry relative="1" as="geometry" />
@@ -51,7 +48,7 @@
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-15" edge="1" parent="1" source="pCsqk6dbK2nvVDnFw2cK-4" style="endArrow=block;html=1;strokeWidth=2;rounded=0;" target="pCsqk6dbK2nvVDnFw2cK-8" value="Upload/store + signed download URLs (HMAC + expiry)">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pCsqk6dbK2nvVDnFw2cK-16" edge="1" parent="1" source="pCsqk6dbK2nvVDnFw2cK-4" style="endArrow=block;html=1;strokeWidth=2;dashed=1;rounded=0;" target="pCsqk6dbK2nvVDnFw2cK-9" value="(Future) Submit job / poll status / get outputs">
+        <mxCell id="pCsqk6dbK2nvVDnFw2cK-16" edge="1" parent="1" source="pCsqk6dbK2nvVDnFw2cK-4" style="endArrow=block;html=1;strokeWidth=2;dashed=1;rounded=0;" target="pCsqk6dbK2nvVDnFw2cK-9" value="Submit job / poll status / get outputs">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="pCsqk6dbK2nvVDnFw2cK-17" edge="1" parent="1" source="pCsqk6dbK2nvVDnFw2cK-9" style="endArrow=block;html=1;strokeWidth=2;dashed=1;rounded=0;" target="pCsqk6dbK2nvVDnFw2cK-8" value="(Future) Write stems/mix outputs">
