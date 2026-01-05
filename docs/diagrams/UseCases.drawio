@@ -1,175 +1,141 @@
-<mxfile host="app.diagrams.net" modified="2026-01-05T00:00:00.000Z" agent="GPT" version="24.7.8" type="device">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9">
   <diagram id="use-cases-ai-music-editor" name="Use Case Diagram">
-    <mxGraphModel dx="1280" dy="720" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+    <mxGraphModel dx="3078" dy="1774" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-
-        <!-- ACTORS -->
-        <mxCell id="actor_user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="120" width="60" height="120" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="UtBkGv8R05UidkiDO52m-9" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="boundary_login">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <mxCell id="actor_supabase" value="Supabase Auth&#10;(External)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="40" y="410" width="90" height="140" as="geometry"/>
+        <mxCell id="actor_user" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=1;" value="User" vertex="1">
+          <mxGeometry height="120" width="60" x="40" y="30" as="geometry" />
         </mxCell>
-
-        <!-- SYSTEM BOUNDARIES -->
-        <mxCell id="boundary_login" value="AI Music Editor Platform&#10;Login &amp; Access" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="180" y="40" width="520" height="260" as="geometry"/>
+        <mxCell id="boundary_login" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&#xa;Login &amp; Access" vertex="1">
+          <mxGeometry height="260" width="460" x="250" y="40" as="geometry" />
         </mxCell>
-
-        <mxCell id="boundary_workflow" value="AI Music Editor Platform&#10;MVP Workflow" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="180" y="330" width="520" height="520" as="geometry"/>
+        <mxCell id="boundary_workflow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&#xa;MVP Workflow" vertex="1">
+          <mxGeometry height="300" width="570" x="-692" as="geometry" />
         </mxCell>
-
-        <mxCell id="boundary_player" value="AI Music Editor Platform&#10;Media Player (After stems)" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="760" y="40" width="590" height="420" as="geometry"/>
+        <mxCell id="boundary_player" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&#xa;Media Player (After stems)" vertex="1">
+          <mxGeometry height="420" width="670" x="-320" y="-460" as="geometry" />
         </mxCell>
-
-        <!-- LOGIN USE CASES -->
-        <mxCell id="uc_sign_up" value="Sign up" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="110" width="170" height="60" as="geometry"/>
+        <mxCell id="uc_sign_up" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Sign up" vertex="1">
+          <mxGeometry height="60" width="170" x="300" y="100" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_sign_in" value="Log in securely" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="110" width="180" height="60" as="geometry"/>
+        <mxCell id="uc_sign_in" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Log in securely" vertex="1">
+          <mxGeometry height="60" width="180" x="520" y="100" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_reset_pwd" value="Reset password" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="350" y="200" width="190" height="60" as="geometry"/>
+        <mxCell id="uc_reset_pwd" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Reset password" vertex="1">
+          <mxGeometry height="60" width="190" x="390" y="170" as="geometry" />
         </mxCell>
-
-        <!-- WORKFLOW USE CASES -->
-        <mxCell id="uc_upload" value="Upload music" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="410" width="180" height="60" as="geometry"/>
+        <mxCell id="uc_upload" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Upload music" vertex="1">
+          <mxGeometry height="60" width="180" x="-682" y="30" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_split" value="Split into stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="410" width="180" height="60" as="geometry"/>
+        <mxCell id="uc_split" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Split into stems" vertex="1">
+          <mxGeometry height="60" width="180" x="-332" y="30" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_edit_section" value="Edit a section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="330" y="500" width="190" height="60" as="geometry"/>
+        <mxCell id="uc_edit_section" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="AI GEN editor&lt;div&gt;(full instrument)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="190" x="-612" y="110" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_dl_stems" value="Download stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="610" width="180" height="60" as="geometry"/>
+        <mxCell id="uc_dl_stems" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Download stems" vertex="1">
+          <mxGeometry height="60" width="180" x="-642" y="200" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_dl_song" value="Download updated complete song" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="430" y="610" width="260" height="60" as="geometry"/>
+        <mxCell id="uc_dl_song" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Download updated complete song" vertex="1">
+          <mxGeometry height="60" width="260" x="-402" y="200" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_view_progress" value="View processing progress" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="700" width="210" height="60" as="geometry"/>
+        <mxCell id="uc_play" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Play / Pause" vertex="1">
+          <mxGeometry height="60" width="170" x="-210" y="-380" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_cancel" value="Cancel long operation" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="700" width="210" height="60" as="geometry"/>
+        <mxCell id="uc_seek" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Seek / Scrub" vertex="1">
+          <mxGeometry height="60" width="170" x="-20" y="-380" as="geometry" />
         </mxCell>
-
-        <!-- MEDIA PLAYER USE CASES -->
-        <mxCell id="uc_play" value="Play / Pause" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="820" y="120" width="170" height="60" as="geometry"/>
+        <mxCell id="uc_mute" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Mute stem" vertex="1">
+          <mxGeometry height="60" width="150" x="170" y="-380" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_seek" value="Seek / Scrub" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="120" width="170" height="60" as="geometry"/>
+        <mxCell id="uc_solo" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Solo stem" vertex="1">
+          <mxGeometry height="60" width="150" x="-300" y="-280" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_mute" value="Mute stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="120" width="150" height="60" as="geometry"/>
+        <mxCell id="uc_volume" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Increase / Decrease stem volume" vertex="1">
+          <mxGeometry height="60" width="290" x="30" y="-280" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_solo" value="Solo stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="820" y="220" width="150" height="60" as="geometry"/>
+        <mxCell id="uc_loop" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" value="Loop section" vertex="1">
+          <mxGeometry height="60" width="170" x="-210" y="-180" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_volume" value="Increase / Decrease stem volume" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
-          <mxGeometry x="990" y="220" width="290" height="60" as="geometry"/>
+        <mxCell id="uc_speed" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" value="Change playback speed" vertex="1">
+          <mxGeometry height="60" width="210" x="-20" y="-180" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_loop" value="Loop section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="820" y="320" width="170" height="60" as="geometry"/>
+        <mxCell id="e_extend_loop" edge="1" parent="1" source="uc_loop" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" target="uc_play" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <mxCell id="uc_speed" value="Change playback speed" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="320" width="210" height="60" as="geometry"/>
+        <mxCell id="e_extend_speed" edge="1" parent="1" source="uc_speed" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" target="uc_play" value="&lt;&lt;extend&gt;&gt;">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
-        <!-- ASSOCIATIONS: User -->
-        <mxCell id="e_user_signup" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_sign_up">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-11" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.587;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;" target="boundary_player">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_signin" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_sign_in">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-12" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.995;entryY=0.323;entryDx=0;entryDy=0;entryPerimeter=0;" target="boundary_workflow">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_reset" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_reset_pwd">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="AI GEN editor&lt;div&gt;(section)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="190" x="-402" y="110" as="geometry" />
         </mxCell>
-
-        <mxCell id="e_user_upload" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_upload">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="As a user I want to make use of APP media player feature" vertex="1">
+          <mxGeometry height="30" width="330" x="90" y="-40" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_split" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_split">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-17" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="As a user I want to login" vertex="1">
+          <mxGeometry height="30" width="60" x="130" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_edit" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_edit_section">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="As a user I want to upload/download/create/edit my music" vertex="1">
+          <mxGeometry height="30" width="160" x="-120" y="120" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_dl_stems" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_dl_stems">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&lt;br&gt;Project Management" vertex="1">
+          <mxGeometry height="260" width="460" x="-480" y="390" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_dl_song" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_dl_song">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-22" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Create a project" vertex="1">
+          <mxGeometry height="60" width="170" x="-430" y="450" as="geometry" />
         </mxCell>
-
-        <mxCell id="e_user_play" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-23" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Load Project" vertex="1">
+          <mxGeometry height="60" width="180" x="-210" y="450" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_seek" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_seek">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="List my projects" vertex="1">
+          <mxGeometry height="60" width="190" x="-415" y="530" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_mute" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_mute">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-25" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.437;entryY=-0.004;entryDx=0;entryDy=0;entryPerimeter=0;" target="UtBkGv8R05UidkiDO52m-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="320" />
+              <mxPoint x="-279" y="320" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_user_solo" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_solo">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-27" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Delete Project" vertex="1">
+          <mxGeometry height="60" width="180" x="-205" y="530" as="geometry" />
         </mxCell>
-        <mxCell id="e_user_volume" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_volume">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&lt;br&gt;Collaboration" vertex="1">
+          <mxGeometry height="230" width="320" x="40" y="390" as="geometry" />
         </mxCell>
-
-        <!-- ASSOCIATIONS: Supabase Auth (external) -->
-        <mxCell id="e_supabase_signup" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_up">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-30" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Share project" vertex="1">
+          <mxGeometry height="60" width="90" x="70" y="440" as="geometry" />
         </mxCell>
-        <mxCell id="e_supabase_signin" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_in">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-31" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Invite Collaborator" vertex="1">
+          <mxGeometry height="60" width="120" x="55" y="520" as="geometry" />
         </mxCell>
-        <mxCell id="e_supabase_reset" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_reset_pwd">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-32" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="View Collaborators" vertex="1">
+          <mxGeometry height="60" width="120" x="210" y="430" as="geometry" />
         </mxCell>
-
-        <!-- OPTIONAL INCLUDE/EXTEND relationships (kept light) -->
-        <mxCell id="e_include_progress_upload" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_upload" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-33" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Manage permissions" vertex="1">
+          <mxGeometry height="60" width="120" x="210" y="510" as="geometry" />
         </mxCell>
-        <mxCell id="e_include_progress_split" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_split" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-34" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.293;entryY=0.018;entryDx=0;entryDy=0;entryPerimeter=0;" target="UtBkGv8R05UidkiDO52m-29">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="134" y="90" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_extend_cancel" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_cancel" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="UtBkGv8R05UidkiDO52m-35" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="As a user I want to collaborate with other users in my project" vertex="1">
+          <mxGeometry height="30" width="60" x="140" y="310" as="geometry" />
         </mxCell>
-
-        <mxCell id="e_extend_loop" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_loop" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_extend_speed" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_speed" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
       </root>
     </mxGraphModel>
   </diagram>
