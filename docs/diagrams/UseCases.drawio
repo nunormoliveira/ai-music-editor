@@ -5,189 +5,91 @@
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <!-- ====== STYLES (via per-cell style strings) ====== -->
-
-        <!-- ====== ACTORS ====== -->
-        <mxCell id="actor_user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <!-- ACTORS -->
+        <mxCell id="actor_user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="120" width="60" height="120" as="geometry"/>
         </mxCell>
 
-        <mxCell id="actor_supabase" value="Supabase Auth&#10;(External)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+        <mxCell id="actor_supabase" value="Supabase Auth&#10;(External)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="410" width="90" height="140" as="geometry"/>
         </mxCell>
 
-        <!-- ====== SYSTEM BOUNDARY: LOGIN ====== -->
-        <mxCell id="boundary_login" value="AI Music Editor Platform&#10;Login &amp; Access" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+        <!-- SYSTEM BOUNDARIES -->
+        <mxCell id="boundary_login" value="AI Music Editor Platform&#10;Login &amp; Access" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="180" y="40" width="520" height="260" as="geometry"/>
         </mxCell>
 
-        <!-- Use cases: Login -->
-        <mxCell id="uc_sign_up" value="Sign up" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="240" y="110" width="170" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_sign_in" value="Log in securely" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="470" y="110" width="180" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_reset_pwd" value="Reset password" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="350" y="200" width="190" height="60" as="geometry"/>
-        </mxCell>
-
-        <!-- ====== SYSTEM BOUNDARY: WORKFLOW MVP ====== -->
-        <mxCell id="boundary_workflow" value="AI Music Editor Platform&#10;MVP Workflow" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="boundary_workflow" value="AI Music Editor Platform&#10;MVP Workflow" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="180" y="330" width="520" height="520" as="geometry"/>
         </mxCell>
 
-        <!-- Use cases: Workflow MVP -->
-        <mxCell id="uc_upload" value="Upload music" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="240" y="410" width="180" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_split" value="Split into stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="470" y="410" width="180" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_edit_section" value="Edit a section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="330" y="500" width="190" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_dl_stems" value="Download stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="240" y="610" width="180" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_dl_song" value="Download updated complete song" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="430" y="610" width="260" height="60" as="geometry"/>
-        </mxCell>
-
-        <!-- Optional supporting use cases inside workflow -->
-        <mxCell id="uc_view_progress" value="View processing progress" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="700" width="210" height="60" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="uc_cancel" value="Cancel long operation" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="700" width="210" height="60" as="geometry"/>
-        </mxCell>
-
-        <!-- ====== SYSTEM BOUNDARY: MEDIA PLAYER AFTER STEMS ====== -->
-        <mxCell id="boundary_player" value="AI Music Editor Platform&#10;Media Player (After stems)" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="boundary_player" value="AI Music Editor Platform&#10;Media Player (After stems)" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="760" y="40" width="590" height="420" as="geometry"/>
         </mxCell>
 
-        <!-- Use cases: Media Player after stems -->
-        <mxCell id="uc_play" value="Play / Pause" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <!-- LOGIN USE CASES -->
+        <mxCell id="uc_sign_up" value="Sign up" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="110" width="170" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_sign_in" value="Log in securely" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="110" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_reset_pwd" value="Reset password" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="200" width="190" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- WORKFLOW USE CASES -->
+        <mxCell id="uc_upload" value="Upload music" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="410" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_split" value="Split into stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="410" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_edit_section" value="Edit a section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="500" width="190" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_dl_stems" value="Download stems" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="610" width="180" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_dl_song" value="Download updated complete song" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="610" width="260" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_view_progress" value="View processing progress" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="700" width="210" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uc_cancel" value="Cancel long operation" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="700" width="210" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- MEDIA PLAYER USE CASES -->
+        <mxCell id="uc_play" value="Play / Pause" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="820" y="120" width="170" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="uc_seek" value="Seek / Scrub" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="uc_seek" value="Seek / Scrub" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="1010" y="120" width="170" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="uc_mute" value="Mute stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="uc_mute" value="Mute stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="1200" y="120" width="150" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="uc_solo" value="Solo stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="uc_solo" value="Solo stem" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="820" y="220" width="150" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="uc_volume" value="Increase / Decrease stem volume" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+        <mxCell id="uc_volume" value="Increase / Decrease stem volume" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" vertex="1" parent="1">
           <mxGeometry x="990" y="220" width="290" height="60" as="geometry"/>
         </mxCell>
 
-        <mxCell id="uc_loop" value="Loop section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
+        <mxCell id="uc_loop" value="Loop section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="820" y="320" width="170" height="60" as="geometry"/>
         </mxCell>
-
-        <mxCell id="uc_speed" value="Change playback speed" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=2;dashed=1;" vertex="1" parent="1">
-          <mxGeometry x="1010" y="320" width="210" height="60" as="geometry"/>
-        </mxCell>
-
-        <!-- ====== ASSOCIATIONS (Actor ↔ Use Cases) ====== -->
-
-        <!-- User -> Login -->
-        <mxCell id="e_user_signup" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_sign_up">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_signin" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_sign_in">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_reset" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_reset_pwd">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- User -> Workflow -->
-        <mxCell id="e_user_upload" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_upload">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_split" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_split">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_edit" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_edit_section">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_dl_stems" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_dl_stems">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_dl_song" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_dl_song">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- User -> Media player -->
-        <mxCell id="e_user_play" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_seek" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_seek">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_mute" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_mute">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_solo" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_solo">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_user_volume" value="" style="endArrow=none;html=1;strokeWidth=2;" edge="1" parent="1" source="actor_user" target="uc_volume">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Supabase Auth associations (external) -->
-        <mxCell id="e_supabase_signup" value="auth" style="endArrow=none;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_up">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_supabase_signin" value="auth" style="endArrow=none;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_in">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-        <mxCell id="e_supabase_reset" value="auth" style="endArrow=none;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_reset_pwd">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- ====== INCLUDE / EXTEND (optional, to show relationships) ====== -->
-        <!-- Upload includes viewing progress -->
-        <mxCell id="e_include_progress" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="uc_upload" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Split includes viewing progress -->
-        <mxCell id="e_include_progress2" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="uc_split" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Cancel extends progress (or long-running ops) -->
-        <mxCell id="e_extend_cancel" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="uc_cancel" target="uc_view_progress">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <!-- Media player optional includes -->
-        <mxCell id="e_extend_loop" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="uc_loop" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-        <mxCell id="e_extend_speed" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=2;dashed=1;" edge="1" parent="1" source="uc_speed" target="uc_play">
-          <mxGeometry relative="1" as="geometry"/>
-        </mxCell>
-
-      </root>
-    </mxGraphModel>
-  </diagram>
-</mxfile>
-
