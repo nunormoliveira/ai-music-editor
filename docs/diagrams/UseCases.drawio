@@ -93,3 +93,84 @@
         <mxCell id="uc_loop" value="Loop section" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="820" y="320" width="170" height="60" as="geometry"/>
         </mxCell>
+
+        <mxCell id="uc_speed" value="Change playback speed" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="320" width="210" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ASSOCIATIONS: User -->
+        <mxCell id="e_user_signup" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_sign_up">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_signin" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_sign_in">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_reset" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_reset_pwd">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_user_upload" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_upload">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_split" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_split">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_edit" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_edit_section">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_dl_stems" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_dl_stems">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_dl_song" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_dl_song">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_user_play" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_play">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_seek" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_seek">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_mute" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_mute">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_solo" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_solo">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_user_volume" value="" style="endArrow=none;html=1;strokeWidth=1;" edge="1" parent="1" source="actor_user" target="uc_volume">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ASSOCIATIONS: Supabase Auth (external) -->
+        <mxCell id="e_supabase_signup" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_up">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_supabase_signin" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_sign_in">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_supabase_reset" value="auth" style="endArrow=none;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="actor_supabase" target="uc_reset_pwd">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- OPTIONAL INCLUDE/EXTEND relationships (kept light) -->
+        <mxCell id="e_include_progress_upload" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_upload" target="uc_view_progress">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_include_progress_split" value="&lt;&lt;include&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_split" target="uc_view_progress">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_extend_cancel" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_cancel" target="uc_view_progress">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e_extend_loop" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_loop" target="uc_play">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e_extend_speed" value="&lt;&lt;extend&gt;&gt;" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" edge="1" parent="1" source="uc_speed" target="uc_play">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
