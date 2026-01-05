@@ -17,7 +17,7 @@
           <mxGeometry height="300" width="570" x="-692" as="geometry" />
         </mxCell>
         <mxCell id="boundary_player" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&#xa;Media Player (After stems)" vertex="1">
-          <mxGeometry height="420" width="670" x="-320" y="-460" as="geometry" />
+          <mxGeometry height="310" width="670" x="-320" y="-350" as="geometry" />
         </mxCell>
         <mxCell id="uc_sign_up" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Sign up" vertex="1">
           <mxGeometry height="60" width="170" x="300" y="100" as="geometry" />
@@ -44,25 +44,25 @@
           <mxGeometry height="60" width="260" x="-402" y="200" as="geometry" />
         </mxCell>
         <mxCell id="uc_play" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Play / Pause" vertex="1">
-          <mxGeometry height="60" width="170" x="-210" y="-380" as="geometry" />
+          <mxGeometry height="60" width="170" x="-210" y="-310" as="geometry" />
         </mxCell>
         <mxCell id="uc_seek" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Seek / Scrub" vertex="1">
-          <mxGeometry height="60" width="170" x="-20" y="-380" as="geometry" />
+          <mxGeometry height="60" width="170" x="-20" y="-310" as="geometry" />
         </mxCell>
         <mxCell id="uc_mute" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Mute stem" vertex="1">
-          <mxGeometry height="60" width="150" x="170" y="-380" as="geometry" />
+          <mxGeometry height="60" width="150" x="170" y="-310" as="geometry" />
         </mxCell>
         <mxCell id="uc_solo" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Solo stem" vertex="1">
-          <mxGeometry height="60" width="150" x="-300" y="-280" as="geometry" />
+          <mxGeometry height="60" width="150" x="-300" y="-210" as="geometry" />
         </mxCell>
         <mxCell id="uc_volume" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Increase / Decrease stem volume" vertex="1">
-          <mxGeometry height="60" width="290" x="30" y="-280" as="geometry" />
+          <mxGeometry height="60" width="290" x="30" y="-210" as="geometry" />
         </mxCell>
         <mxCell id="uc_loop" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" value="Loop section" vertex="1">
-          <mxGeometry height="60" width="170" x="-210" y="-180" as="geometry" />
+          <mxGeometry height="60" width="170" x="-210" y="-110" as="geometry" />
         </mxCell>
         <mxCell id="uc_speed" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;dashed=1;" value="Change playback speed" vertex="1">
-          <mxGeometry height="60" width="210" x="-20" y="-180" as="geometry" />
+          <mxGeometry height="60" width="210" x="-20" y="-110" as="geometry" />
         </mxCell>
         <mxCell id="e_extend_loop" edge="1" parent="1" source="uc_loop" style="endArrow=block;html=1;strokeWidth=1;dashed=1;" target="uc_play" value="&lt;&lt;extend&gt;&gt;">
           <mxGeometry relative="1" as="geometry" />
@@ -89,42 +89,42 @@
           <mxGeometry height="30" width="160" x="-120" y="120" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&lt;br&gt;Project Management" vertex="1">
-          <mxGeometry height="260" width="460" x="-480" y="390" as="geometry" />
+          <mxGeometry height="205" width="460" x="-402" y="335" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-22" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Create a project" vertex="1">
-          <mxGeometry height="60" width="170" x="-430" y="450" as="geometry" />
+          <mxGeometry height="60" width="170" x="-352" y="395" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-23" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Load Project" vertex="1">
-          <mxGeometry height="60" width="180" x="-210" y="450" as="geometry" />
+          <mxGeometry height="60" width="180" x="-132" y="395" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-24" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="List my projects" vertex="1">
-          <mxGeometry height="60" width="190" x="-415" y="530" as="geometry" />
+          <mxGeometry height="60" width="190" x="-337" y="475" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-25" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.437;entryY=-0.004;entryDx=0;entryDy=0;entryPerimeter=0;" target="UtBkGv8R05UidkiDO52m-21">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="70" y="320" />
-              <mxPoint x="-279" y="320" />
+              <mxPoint x="-201" y="320" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-27" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Delete Project" vertex="1">
-          <mxGeometry height="60" width="180" x="-205" y="530" as="geometry" />
+          <mxGeometry height="60" width="180" x="-127" y="475" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=center;verticalAlign=top;strokeWidth=1;" value="AI Music Editor Platform&lt;br&gt;Collaboration" vertex="1">
-          <mxGeometry height="230" width="320" x="40" y="390" as="geometry" />
+          <mxGeometry height="205" width="320" x="85" y="335" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-30" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Share project" vertex="1">
-          <mxGeometry height="60" width="90" x="70" y="440" as="geometry" />
+          <mxGeometry height="60" width="90" x="115" y="385" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-31" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Invite Collaborator" vertex="1">
-          <mxGeometry height="60" width="120" x="55" y="520" as="geometry" />
+          <mxGeometry height="60" width="120" x="100" y="465" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-32" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="View Collaborators" vertex="1">
-          <mxGeometry height="60" width="120" x="210" y="430" as="geometry" />
+          <mxGeometry height="60" width="120" x="255" y="375" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-33" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeWidth=1;" value="Manage permissions" vertex="1">
-          <mxGeometry height="60" width="120" x="210" y="510" as="geometry" />
+          <mxGeometry height="60" width="120" x="255" y="455" as="geometry" />
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-34" edge="1" parent="1" source="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.293;entryY=0.018;entryDx=0;entryDy=0;entryPerimeter=0;" target="UtBkGv8R05UidkiDO52m-29">
           <mxGeometry relative="1" as="geometry">
@@ -134,7 +134,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="UtBkGv8R05UidkiDO52m-35" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="As a user I want to collaborate with other users in my project" vertex="1">
-          <mxGeometry height="30" width="60" x="140" y="310" as="geometry" />
+          <mxGeometry height="30" width="60" x="140" y="220" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
